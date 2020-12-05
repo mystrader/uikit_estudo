@@ -1,0 +1,254 @@
+<div class="uikit-content-header">
+    <form [formGroup]="filtroForm">
+
+        <div class="uikit-content-body">
+            <div class="uikit-actions">
+                <button pButton type="button" class="prime-fab prime-primary" [routerLink]="['cadastrar']">
+                    <i class="pi pi-plus"></i>
+                    Novo
+                </button>
+                <button pButton type="button" class="prime-mini-fab "
+                        [disabled]="(mudancaDeItensSelecionados$ | async)?.length === 0"
+                        (click)="excluirItemsSelecionados()">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </div>
+
+            <uikit-filter (clickPesquisa)="pesquisar($event)" [disabled]="!filtroForm.valid">
+                <div class="uikit-filters">
+                    <div class="container-fluid">
+                        <div class="row">
+
+                            <div class="col-md-3 m-button">
+                                <span class="md-inputfield md-inputfield-box">
+                                  <input class="ui-inputtext ui-corner-all ui-state-default ui-widget"
+                                         formControlName="id" type="number" pInputText>
+                                  <label>Id</label>
+                                </span>
+                            </div>
+                            
+                            <div class="col-md-3 m-button">
+                                <span class="md-inputfield md-inputfield-box">
+                                  <input class="ui-inputtext ui-corner-all ui-state-default ui-widget"
+                                         formControlName="name" type="text" pInputText>
+                                  <label>Name</label>
+                                </span>
+                            </div>
+                            
+                            <div class="col-md-3 m-button">
+                                <span class="md-inputfield md-inputfield-box">
+                                  <input class="ui-inputtext ui-corner-all ui-state-default ui-widget"
+                                         formControlName="breweryType" type="text" pInputText>
+                                  <label>Brewery type</label>
+                                </span>
+                            </div>
+                            
+                            <div class="col-md-3 m-button">
+                                <span class="md-inputfield md-inputfield-box">
+                                  <input class="ui-inputtext ui-corner-all ui-state-default ui-widget"
+                                         formControlName="street" type="text" pInputText>
+                                  <label>Street</label>
+                                </span>
+                            </div>
+                            
+                            <div class="col-md-3 m-button">
+                                <span class="md-inputfield md-inputfield-box">
+                                  <input class="ui-inputtext ui-corner-all ui-state-default ui-widget"
+                                         formControlName="address2" type="text" pInputText>
+                                  <label>Address 2</label>
+                                </span>
+                            </div>
+                            
+                            <div class="col-md-3 m-button">
+                                <span class="md-inputfield md-inputfield-box">
+                                  <input class="ui-inputtext ui-corner-all ui-state-default ui-widget"
+                                         formControlName="address3" type="text" pInputText>
+                                  <label>Address 3</label>
+                                </span>
+                            </div>
+                            
+                            <div class="col-md-3 m-button">
+                                <span class="md-inputfield md-inputfield-box">
+                                  <input class="ui-inputtext ui-corner-all ui-state-default ui-widget"
+                                         formControlName="city" type="text" pInputText>
+                                  <label>City</label>
+                                </span>
+                            </div>
+                            
+                            <div class="col-md-3 m-button">
+                                <span class="md-inputfield md-inputfield-box">
+                                  <input class="ui-inputtext ui-corner-all ui-state-default ui-widget"
+                                         formControlName="state" type="text" pInputText>
+                                  <label>State</label>
+                                </span>
+                            </div>
+                            
+                            <div class="col-md-3 m-button">
+                                <span class="md-inputfield md-inputfield-box">
+                                  <input class="ui-inputtext ui-corner-all ui-state-default ui-widget"
+                                         formControlName="countyProvince" type="text" pInputText>
+                                  <label>County province</label>
+                                </span>
+                            </div>
+                            
+                            <div class="col-md-3 m-button">
+                                <span class="md-inputfield md-inputfield-box">
+                                  <input class="ui-inputtext ui-corner-all ui-state-default ui-widget"
+                                         formControlName="postalCode" type="text" pInputText>
+                                  <label>Postal code</label>
+                                </span>
+                            </div>
+                            
+                            <div class="col-md-3 m-button">
+                                <span class="md-inputfield md-inputfield-box">
+                                  <input class="ui-inputtext ui-corner-all ui-state-default ui-widget"
+                                         formControlName="country" type="text" pInputText>
+                                  <label>Country</label>
+                                </span>
+                            </div>
+                            
+                            <div class="col-md-3 m-button">
+                                <span class="md-inputfield md-inputfield-box">
+                                  <input class="ui-inputtext ui-corner-all ui-state-default ui-widget"
+                                         formControlName="longitude" type="text" pInputText>
+                                  <label>Longitude</label>
+                                </span>
+                            </div>
+                            
+                            <div class="col-md-3 m-button">
+                                <span class="md-inputfield md-inputfield-box">
+                                  <input class="ui-inputtext ui-corner-all ui-state-default ui-widget"
+                                         formControlName="latitude" type="text" pInputText>
+                                  <label>Latitude</label>
+                                </span>
+                            </div>
+                            
+                            <div class="col-md-3 m-button">
+                                <span class="md-inputfield md-inputfield-box">
+                                  <input class="ui-inputtext ui-corner-all ui-state-default ui-widget"
+                                         formControlName="phone" type="text" pInputText>
+                                  <label>Phone</label>
+                                </span>
+                            </div>
+                            
+                            <div class="col-md-3 m-button">
+                                <span class="md-inputfield md-inputfield-box">
+                                  <input class="ui-inputtext ui-corner-all ui-state-default ui-widget"
+                                         formControlName="websiteUrl" type="text" pInputText>
+                                  <label>Website url</label>
+                                </span>
+                            </div>
+                            
+                            <div class="col-md-3 m-button">
+                                <span class="md-inputfield md-inputfield-box">
+                                  <input class="ui-inputtext ui-corner-all ui-state-default ui-widget"
+                                         formControlName="updatedAt" type="text" pInputText>
+                                  <label>Updated at</label>
+                                </span>
+                            </div>
+                            
+                            <div class="col-md-3 m-button">
+                                <span class="md-inputfield md-inputfield-box">
+                                  <input class="ui-inputtext ui-corner-all ui-state-default ui-widget"
+                                         formControlName="createdAt" type="text" pInputText>
+                                  <label>Created at</label>
+                                </span>
+                            </div>
+                            
+                            <button pButton type="submit" class="prime-raised-button prime-primary" (click)="filtrar()">Filtrar
+                            </button>
+                        </div>
+
+                        <div class="row" *ngIf="(mudancaDeFiltro$ | async).length > 0">
+                            <div class="col">
+
+                                <ul class="filters-chips">
+                                    <li><b>Filtros Aplicados:</b></li>
+                                    <li *ngFor="let filterComposite of (mudancaDeFiltro$ | async)">
+                                        {{ filterComposite.campo != null ? ' de ' + filterComposite.campo : ' de pesquisa rápida' }} {{filterComposite.operador}}
+                                        :
+                                        <ng-container>
+                                            <a class="prime-flat-button" (click)="removerFiltro(filterComposite)">
+                                                {{ filterComposite.valor }}
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </a>
+                                            <span> ou</span>
+                                        </ng-container>
+                                    </li>
+                                    <li>
+                                        <a class="prime-flat-button" (click)="limparFiltro()">
+                                            Limpar todos os filtros
+                                            <i class="fa fa-eraser" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </uikit-filter>
+
+            <p-paginator #paginator
+                    [rows]="totalPorPagina"
+                    [pageLinkSize]="2"
+                    [totalRecords]="total"
+                    [rowsPerPageOptions]="[2, 5, 10, 20, 50, 100]"
+                    (onPageChange)="paginar($event)"
+            ></p-paginator>
+
+        </div>
+    </form>
+</div>
+
+<div class="container-fluid">
+
+    <p-table csvSeparator=";"
+             paginatorPosition="both"
+             selectionMode="multiple"
+             emptyMessage="Nenhum registro encontrado."
+             [paginator]="false"
+             [responsive]="true"
+             [columns]="colunasTabela"
+             [value]="data"
+             (onSort)="ordernar($event)"
+             [selection]="(mudancaDeItensSelecionados$ | async)"
+             [metaKeySelection]="true"
+             (selectionChange)="selecionarItem($event)">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th>
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    {{col.header}}
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+            <tr class="ui-selectable-row" (tap)="itemToggle($event, rowData)" (dblclick)="visualizarItem(rowData)">
+                <td>
+                    <p-tableCheckbox [value]="rowData" (click)="selecionarLinha(rowData)"></p-tableCheckbox>
+                </td>
+                <td *ngFor="let col of colunasTabela">
+                    <span class="ui-column-title">{{col.header}}</span>
+                    {{rowData[col.field]}}
+                </td>
+                <td>
+                    <button pButton type="button" (click)="excluirItem(rowData)">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                    <button pButton type="button" (click)="editarItem(rowData)">
+                        <i class="ui-icon-pencil" aria-hidden="true"></i>
+                    </button>
+                    <button pButton type="button" (click)="visualizarItem(rowData)">
+                        <i class="ui-icon-visibility" aria-hidden="true"></i>
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-confirmDialog header="Confirma" icon="pi pi-exclamation-triangle"></p-confirmDialog>

@@ -1,0 +1,92 @@
+image: tjmt/docker-with-compose:latest
+
+workflow:
+  rules:
+    - if: $CI_COMMIT_TAG
+    - if: $CI_COMMIT_BRANCH
+
+stages:
+  - build
+  - deploy
+
+variables:
+  ARTIFACT_DIRECTORY: "docker-extract" # Nome do diretório que conterá todos os artefatos gerados pelo build e teste
+  BRANCH: "$CI_COMMIT_REF_NAME" # Nome da branch que será publicada
+  TARGET: "" # Target do estágio Docker
+  DOCKER_SERVICES: "" # Services do Docker
+
+build:
+  stage: build
+  tags:
+    - docker
+  variables:
+    ARTIFACT_STAGING_DIRECTORY: "./$ARTIFACT_DIRECTORY" # Caminho do diretório que conterá todos os artefatos gerados pelo build e teste
+    DOCKER_PUSH: "true" # Indica se o processo efetuará o `docker push` das imagens construídas pelo build
+    NG_E2E_SPECS: "./src/features/**/*.feature"
+    NG_TEST_SPECS: "."
+    RUN_LOCAL: "false" # Indica se rodará a aplicação localmente
+    RUN_SONARQUBE: "false" # Indica se rodará o Sonarqube
+    RUN_TEST: "true" # Indica se rodará os testes automatizados
+  script:
+    - . ci.sh
+  artifacts:
+    paths:
+      - $ARTIFACT_DIRECTORY
+
+.deploy:
+  stage: deploy
+  tags:
+    - docker
+  variables:
+    COMPOSE_RELEASE_PATH: "./$ARTIFACT_DIRECTORY/BuildArtifacts" # Caminho do diretório que contém os artefatos gerados pelo build
+    DEPLOY_ENVIRONMENT: "alpha" # Ambiente em que será efetuado o deploy
+    DEPLOY_KUBERNETES: "true" # Indica se irá rodar o script que publica os YAML no Kubernetes (kubectl apply)
+    DESTROY_KUBERNETES_ENVIRONMENT: "false" # Indica se irá rodar o script que deleta os YAML no Kubernetes (kubectl delete)
+    KUBECONFIG_PATH: "/var/release/source/kubeconfig" # Caminho do arquivo que contém o KUBECONFIG do cluster em que será realizado o deploy
+  before_script:
+    - echo "$KUBECONFIG_DEV" | base64 -d > $COMPOSE_RELEASE_PATH/source/kubeconfig # Decodificação do kubeconfig da variável
+  script:
+    - . $COMPOSE_RELEASE_PATH/source/cd.sh
+  dependencies:
+    - build
+
+deploy-alpha:
+  extends: .deploy
+  variables:
+    DEPLOY_ENVIRONMENT: "alpha"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: never
+    - if: '$CI_COMMIT_BRANCH == "develop"'
+      when: never
+    - if: '$CI_COMMIT_BRANCH =~ /^release/ || $CI_COMMIT_BRANCH =~ /^hotfix/'
+      when: never
+    - if: $CI_COMMIT_TAG
+      when: never
+    - when: manual
+
+deploy-beta:
+  extends: .deploy
+  variables:
+    DEPLOY_ENVIRONMENT: "beta"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "develop"'
+      when: always
+
+deploy-rc:
+  extends: .deploy
+  variables:
+    DEPLOY_ENVIRONMENT: "rc"
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /^release/ || $CI_COMMIT_BRANCH =~ /^hotfix/'
+      when: always
+
+deploy-stable:
+  extends: .deploy
+  variables:
+    DEPLOY_ENVIRONMENT: "stable"
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: manual
+  before_script:
+    - echo "$KUBECONFIG_PROD" | base64 -d > $COMPOSE_RELEASE_PATH/source/kubeconfig # Decodificação do kubeconfig da variável

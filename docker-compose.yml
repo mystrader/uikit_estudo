@@ -1,0 +1,17 @@
+version: '3.6'
+
+services:
+  uikit-seed-cnj-jus-br:
+    image: uikit-seed.cnj.jus.br:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BASE_HREF: /
+      target: debug
+    environment:
+      AUTH_AUTHORITY: 'http://localhost:8080/auth/realms/pje/'
+      AUTH_CLIENT_ID: 'sistema'
+      AUTH_SCOPE: 'openid profile email roles offline_access'
+    ports:
+      - "4200:4200"

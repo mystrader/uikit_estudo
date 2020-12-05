@@ -1,0 +1,66 @@
+.mat-card {
+  font-size: 1em;
+  margin-bottom: 15px;
+  &.normal {
+    background: #35fe30;
+    color: #000;
+  }
+  &.alert {
+    background: #fefc30;
+    color: #000;
+  }
+  &.danger {
+    background: #fe3030;
+    color: #fff;
+  }
+
+  .amount {
+    font-size: 3em;
+    font-weight: bold;
+    text-align: center;
+  }
+  .desc {
+    text-align: center;
+  }
+}
+.example-card {
+  .picture {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: absolute;
+
+    transform: translate(-50%);
+    left: 50%;
+    margin-top: -70px !important;
+    img {
+      max-height: 100%;
+    }
+    .mat-icon {
+      background: #005efc;
+      color: #fff;
+      width: 100%;
+      height: 100%;
+      display: inherit;
+      line-height: 90px;
+      text-align: center;
+      font-size: 2.4em;
+      position: absolute;
+      left:0;
+      top:0;
+    }
+  }
+  .welcome {
+    padding-top: 40px;
+    text-align: center;
+    font-size: inherit;
+    .name {
+      font-size: 1.2em;
+    }
+    .function {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  }
+}

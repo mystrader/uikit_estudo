@@ -1,0 +1,16 @@
+version: '3.6'
+
+services:
+  keycloak-cnj-jus-br:
+    image: jboss/keycloak:11.0.0
+    #image: registry.cnj.jus.br/pje2/pje2-infraestrutura/pje-kc:1.0.11 #Utilize este para simular com o Login Nacional (necessário logar no registry)
+    command: -Dkeycloak.profile.feature.upload_scripts=enabled
+    environment:
+      KEYCLOAK_USER: 'admin'
+      KEYCLOAK_PASSWORD: 'admin'
+      KEYCLOAK_IMPORT: '/tmp/realm-export.json'
+      #KEYCLOAK_IMPORT: '/tmp/realm-export-pje.json' #Utilize este para simular com o Login Nacional (necessário utilizar a imagem do pje-kc)
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./local/keycloak:/tmp

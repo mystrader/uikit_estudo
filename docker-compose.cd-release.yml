@@ -1,0 +1,27 @@
+version: "3.6"
+
+services:
+  uikit-seed-cnj-jus-br:
+    image: tjmt/publicador:1
+    environment:
+      # NPM
+      DEPLOY_NPM: ${DEPLOY_NPM:-false} # Indica se irá rodar o script que publica pacotes NPM (npm publish)
+      NPM_PACKAGES_FOLDER: ${NPM_PACKAGES_FOLDER:-/var/release/packages/npm} # Caminho do pacote NPM (.tgz)
+      NPM_LIFECYCLE_VERSION: ${NPM_LIFECYCLE_VERSION:-} # Lifecycle do pacote NPM
+      NPM_REGISTRY: ${NPM_REGISTRY:-} # Registry para publicação do pacote NPM
+      NPM_USER: ${NPM_USER} # Usuário para login no registry npm
+      NPM_PASS: ${NPM_PASS} # Senha para login no registry npm
+      NPM_EMAIL: ${NPM_EMAIL:-} # Email para login no registry npm
+      # Kubernetes
+      DEPLOY_KUBERNETES: ${DEPLOY_KUBERNETES:-false} # Indica se irá rodar o script que publica os YAML no Kubernetes (kubectl apply)
+      DESTROY_KUBERNETES_ENVIRONMENT: ${DESTROY_KUBERNETES_ENVIRONMENT:-false} # Indica se irá rodar o script que deleta os YAML no Kubernetes (kubectl delete)
+      KUBERNETES_FOLDER: ${KUBERNETES_FOLDER:-/var/release/source} # Caminho dos arquivos YAML para publicação
+      KUBECONFIG_PATH: ${KUBECONFIG_PATH:-/var/release/source/kubeconfig} # Caminho do kubeconfig para publicação
+      # Kompose
+      DOCKER_REGISTRY: ${DOCKER_REGISTRY:-}
+      BRANCH: ${BRANCH}
+      BRANCH_DNS: ${BRANCH_DNS}
+      VERSION: ${VERSION}
+      COMPOSE_PATH: ${COMPOSE_PATH} # Caso deseje utilizar o Kompose para converter YML em YAML, informar o caminho completo do docker-compose a ser transformado
+    volumes:
+      - "${COMPOSE_RELEASE_PATH}:/var/release"

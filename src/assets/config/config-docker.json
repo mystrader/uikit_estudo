@@ -1,0 +1,12 @@
+{
+  "name": "${NAME}",
+  "production": "${PRODUCTION}",
+  "api": {
+    "url": "${API_URL}"
+  },
+  "authentication": {
+    "authority": "${AUTH_AUTHORITY}",
+    "client_id": "${AUTH_CLIENT_ID}",
+    "scope": "${AUTH_SCOPE}"
+  }
+}

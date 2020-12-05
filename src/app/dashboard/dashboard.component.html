@@ -1,0 +1,127 @@
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>Item 1</button>
+  <button mat-menu-item>Item 2</button>
+</mat-menu>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <!-- card user info-->
+      <mat-card class="example-card">
+        <mat-card-header>
+          <button mat-icon-button class="btn-options contrast" [matMenuTriggerFor]="menu">
+            <mat-icon class="fas fa-ellipsis-v"></mat-icon>
+          </button>
+        </mat-card-header>
+        <img mat-card-image src="{{ imageProfile }}" alt="Photo of a Shiba Inu">
+        <mat-card-content>
+          <div class="picture">
+            <mat-icon *ngIf="!(user$ | async).imageURL" aria-label="Example icon-button with a heart icon"
+              class="fas fa-user"></mat-icon>
+            <img *ngIf="(user$ | async).imageURL" [src]="(user$ | async).imageURL" alt="Foto do usuário logado" />
+          </div>
+          <div class="welcome">
+            Bem vindo(a),
+            <div class="name">{{ (user$ | async).name }}</div>
+            <div class="function" *ngIf="(user$ | async).email">{{ (user$ | async).email }}</div>
+            <!--<div class="location">Tribunal de Justiça do Estado de Mato Grosso</div>-->
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-md-4">
+      <!-- card anotações pessoais -->
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>Anotações Pessoais</mat-card-title>
+          <button class="btn-options" mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon class="fas fa-ellipsis-v"></mat-icon>
+          </button>
+        </mat-card-header>
+
+        <mat-card-content>
+          <mat-nav-list class="list-reader">
+            <a mat-list-item *ngFor="let folder of typesOfShoes" [class.is-read]="folder.read">
+              <mat-icon matListIcon class="fa-lg far" [class.fa-eye]="!folder.read" [class.fa-eye-slash]="folder.read">
+              </mat-icon>
+              <p>
+                {{ folder.description }}
+              </p>
+              <mat-divider></mat-divider>
+            </a>
+          </mat-nav-list>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <form>
+
+            <mat-form-field color="primary" appearance="fill">
+              <mat-label>Criar uma nova anotação</mat-label>
+              <input matInput #message maxlength="256" placeholder="Message">
+            </mat-form-field>
+            <button mat-flat-button color="primary">CRIAR</button>
+
+          </form>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="col-md-2">
+      <mat-card class="normal">
+        <mat-card-header>
+          <button class="btn-options" mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon class="fas fa-ellipsis-v"></mat-icon>
+          </button>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="amount">1</div>
+          <div class="desc">Processo aguardando assinatura</div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="alert">
+        <mat-card-header>
+          <button class="btn-options" mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon class="fas fa-ellipsis-v"></mat-icon>
+          </button>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="amount">1</div>
+          <div class="desc">Processo aguardando assinatura</div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="danger">
+        <mat-card-header>
+          <button class="btn-options" mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon class="fas fa-ellipsis-v"></mat-icon>
+          </button>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="amount">1</div>
+          <div class="desc">Processo aguardando assinatura</div>
+        </mat-card-content>
+      </mat-card>
+
+    </div>
+
+    <div class="col-md-4">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>Calendário de Audiências</mat-card-title>
+          <button class="btn-options" mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon class="fas fa-ellipsis-v"></mat-icon>
+          </button>
+        </mat-card-header>
+
+        <mat-card-content>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

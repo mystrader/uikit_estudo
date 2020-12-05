@@ -1,0 +1,31 @@
+<div class="uikit-content-header">
+
+  <form [formGroup]="breweriesForm" (ngSubmit)="salvar(saveButton.selection)">
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <div class="prime-card">
+            <app-breweries-editor *ngIf="item" [item]="item" formControlName="breweries"></app-breweries-editor>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="uikit-content-body">
+      <div class="uikit-actions">
+
+        <uikit-save-button #saveButton (save)="salvar($event)"></uikit-save-button>
+
+        <button pButton type="button" class="prime-mini-fab " color="" *ngIf="item == null" type="reset" [disabled]="!breweriesForm.dirty">
+          <i class="fa fa-eraser" aria-hidden="true"></i>
+        </button>
+
+      </div>
+    </div>
+
+  </form>
+
+</div>
+
+

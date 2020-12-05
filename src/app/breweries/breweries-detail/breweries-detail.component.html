@@ -1,0 +1,30 @@
+<div class="uikit-content-header">
+
+    <div class="uikit-content-body">
+        <div class="uikit-actions">
+
+            <button pButton type="button" class="prime-fab" color="primary" (click)="alterar()">
+                <i class="pi pi-pencil"></i>
+                Editar
+            </button>
+
+            <button pButton type="button" class="prime-mini-fab " color="" (click)="excluir()">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="prime-card">
+                    <app-breweries-viewer [class.is-loading]="isLoading$ | async"
+                                          [item]="item$ | async"></app-breweries-viewer>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<p-confirmDialog header="Confirma" icon="pi pi-exclamation-triangle"></p-confirmDialog>
